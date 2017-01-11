@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>API</title>
+
+  <!-- Bootstrap File -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+   <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Jumbotron with Title -->
+    <div class="jumbotron">
+      <h1 class="text-center"><strong>New York Times</strong></h1>
+    </div>
+
+	<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-primary" style="border-color:#eeeeee;">
+					<div class="panel-heading" style="background-color:#eeeeee; color:black; border-style:none;">
+						<h3 class="panel-title"><span class="glyphicon glyphicon-cog""></span><strong> Search Parameters </strong></h3>
+					</div>
+					<div class="panel-body">
+
+
+					<div id="searchparameters"></div>
+
+					<form>
+					  	<div class="form-group">
+					    <label for="exampleInputEmail1">Search Term:</label>
+					    <input type="email" class="form-control" id="searchTerm" placeholder="Enter Term">
+					  </div>
+
+						<div class="form-group"> 
+					    <label for="exampleInputEmail1">Number of Records To Retrive:</label>
+					    <input type="email" class="form-control" id="recordsNumber" placeholder="Enter Number">
+					  	</div>
+
+					  	<div class="form-group">
+					    <label for="exampleInputEmail1">Start Year (Optional):</label>
+					    <input type="email" class="form-control" id="startYear" placeholder="Enter Year">
+					  	</div>
+
+					  	<div class="form-group">
+					    <label for="exampleInputEmail1">End Year (Optional):</label>
+					    <input type="email" class="form-control" id="endYear" placeholder="Enter Year">
+					  	</div>
+
+					  	<button type="button" class="btn btn-primary btn-lg" id="submit"><span class="glyphicon glyphicon-search"></span>  Search</button>
+					  	<button type="button" class="btn btn-secondary btn-lg" id="clearResults"><span class="glyphicon glyphicon-fire"></span>  Clear Results</button> 
+					  	
+
+					 </form>
+
+						
+					</div>
+				</div>
+		</div>
+
+	</div>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-primary" style="border-color:#eeeeee;">
+
+                <!-- Panel Heading for the retrieved articles box -->
+                <div class="panel-heading" style="background-color:#eeeeee; color:black; border-style:none;">
+                    <h3 class="panel-title"><strong><i class="glyphicon glyphicon-list-alt"></i>   Top Articles</strong></h3>
+                </div>
+
+                <!-- This main panel will hold each of the resulting articles -->
+                <div class="panel-body" id="results">
+
+					
+
+                </div>
+            </div>
+
+	</div>
+</div>
+
+
+
+</div>
+
+<script type="text/javascript">
+
+$("#submit").on("click", function() {
+
+
+
+	var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+	var searchTerm = $("#searchTerm").val().trim();
+	//var startDate = $("#startYear").val().trim();
+	//var endDate = $("#endYear").val().trim();
+
+
+
+	url += '?' + $.param({
+	  'api-key': "4f843c0fe00a4476b1e4845e676dc78e",
+	  'q': searchTerm//put variable here /form string
+	  //'begin_date': startDate, //put variable here YYYYMMDD
+	  //'end_date': endDate//put variable YYYYMMDD
+	});
+
+	$.ajax({
+	  url: url,
+	  method: 'GET',
+	}).done(function(result) {
+	console.log(searchTerm);
+	  console.log(result);
+	  // console.log(result.response.docs[0].headline.main);
+	  // console.log(result.response.docs[0].pub_date);
+	  // console.log(result.response.docs[0].byline.original);
+	  // console.log(result.response.docs[0].section_name);
+	  // console.log(result.response.docs[0].web_url);
+
+	  for (i = 0; i < 5; i++ ){
+
+	  }
+	}).fail(function(err) {
+	  console.log("Your result could not be processed");
+	});
+
+});
+</script>
+
+</body>
+</html>
