@@ -9,7 +9,12 @@
 
    <!-- JQuery -->
   <script src="https://code.jquery.com/jquery.js"></script>
+  <style>
 
+  .searchResponse {
+  	margin: 10px;
+  }
+  </style>
 
 </head>
 <body>
@@ -34,13 +39,13 @@
 
 					<form>
 					  	<div class="form-group">
-					    <label for="exampleInputEmail1">Search Term:</label>
-					    <input type="email" class="form-control" id="searchTerm" placeholder="Enter Term">
+					    <label for="searchTerm">Search Term:</label>
+					    <input type="search" class="form-control" id="searchTerm" placeholder="Enter Search">
 					  </div>
 
 						<div class="form-group"> 
-					    <label for="exampleInputEmail1">Number of Records To Retrive:</label>
-					    <select class="form-control" id="recordsNumber" placeholder="Select One">
+					    <label for="recordsNumber">Number of Records To Retrieve:</label>
+					    <select class="form-control" id="recordsNumber">
 						    <option>1</option>
 						    <option>5</option>
 						    <option>10</option>
@@ -49,13 +54,13 @@
 					  	</div>
 
 					  	<div class="form-group">
-					    <label for="exampleInputEmail1">Start Year (Optional):</label>
-					    <input type="email" class="form-control" id="startYear" placeholder="Enter Date YYYYMMDD">
+					    <label for="startYear">Start Year (Optional):</label>
+					    <input type="text" class="form-control" id="startYear" placeholder="Enter Date YYYYMMDD">
 					  	</div>
 
 					  	<div class="form-group">
-					    <label for="exampleInputEmail1">End Year (Optional):</label>
-					    <input type="email" class="form-control" id="endYear" placeholder="Enter Date YYYYMMDD">
+					    <label for="endYear">End Year (Optional):</label>
+					    <input type="text" class="form-control" id="endYear" placeholder="Enter Date YYYYMMDD">
 					  	</div>
 
 					  	<button type="button" class="btn btn-primary btn-lg" id="submit"><span class="glyphicon glyphicon-search"></span>  Search</button>
@@ -120,17 +125,21 @@ $("#submit").on("click", function() {
 	  url: url,
 	  method: 'GET',
 	}).done(function(result) {
-	console.log(searchTerm);
-	  console.log(result);
-	  // console.log(result.response.docs[0].headline.main);
-	  // console.log(result.response.docs[0].pub_date);
-	  // console.log(result.response.docs[0].byline.original);
-	  // console.log(result.response.docs[0].section_name);
-	  // console.log(result.response.docs[0].web_url);
+		var $returnCount = $("#recordsNumber").val();
+		
+		console.log(result);
 
-	  for (i = 0; i < 5; i++ ){
-
+	  for (i = 0; i < $returnCount ; i++){
+	  	$("#results").append("<div class='searchResponse'>");
+	  	$("#results").append("<div class='headline'>" + result.response.docs[i].headline.main + "</div>");
+	  	$("#results").append("<div class='pubdate'>" + result.response.docs[i].pub_date + "</div>");
+	  	// $("#results").append("<div class='byline'>" + result.response.docs[i].byline + "</div>"); //this one is inconsistent!!!
+	  	$("#results").append("<div class='section'>" + result.response.docs[i].section_name + "</div>");
+	  	$("#results").append("<div class='webURL'>" + result.response.docs[i].web_url + "</div>");
+	  	$("#results").append("</div>");
 	  }
+
+	  	
 	}).fail(function(err) {
 	  console.log("Your result could not be processed");
 	});
